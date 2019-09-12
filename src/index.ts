@@ -2,8 +2,8 @@
 
 import * as yargonaut from "yargonaut"
 import * as yargs from "yargs"
-import { DefaultCommand } from "./commands/default.command";
-import { AddCommand } from "./commands/add-command.command";
+import { DefaultCommand } from "./app/commands/default.command";
+import { AddCommand } from "./app/commands/add-command.command";
 
 yargonaut
   .style("blue")
@@ -12,9 +12,9 @@ yargonaut
   .errorsStyle("red")
 
 yargs
-  .usage("Usage: $0 [<command>] [options]")
   .command(new DefaultCommand())
   .command(new AddCommand())
+  .usage("Usage: $0 [<command>] [options]")
   .strict()
   .alias("v", "version")
   .help("h")

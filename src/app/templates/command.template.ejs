@@ -1,0 +1,14 @@
+import * as utils from "../../common/utils"
+
+export class <%= _.trim(_.startCase(name)) %>Command implements Command {
+  public command = "<%= _.toLower(name) %>"
+  public describe = "Description for the <%= _.trim(_.startCase(name)) %> command."
+
+  public builder(yargs: any) {
+    // TODO: add options for this command. Docs: http://yargs.js.org/docs/.
+  }
+
+  public handler = async (argv: any) => {
+    // TODO: implement the things this command has to make. Docs: http://yargs.js.org/docs/.
+  }
+}

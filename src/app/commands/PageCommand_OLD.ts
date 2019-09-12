@@ -1,13 +1,11 @@
-import { pascalCase, paramCase, titleCase } from "change-case"
 import * as path from "path"
-import * as utils from "./utils"
-import { featureModuleTemplate } from "../templates/feature"
+import * as utils from "../../common/utils"
 import {
   pageModuleTemplate,
   pageComponentTemplate,
   pageHtmlTemplate,
   pageScssTemplate
-} from "../templates/page"
+} from "../templates/page_OLD"
 
 export class PageCommand {
   command = "generate:page"

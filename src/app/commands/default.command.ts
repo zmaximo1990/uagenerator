@@ -1,11 +1,10 @@
 import * as path from "path"
-import * as utils from "./utils"
-import chalk from "chalk";
-var inquirer = require('inquirer');
+import * as utils from "../../common/utils"
+import * as inquirer from "inquirer";
 
 export class DefaultCommand implements Command {
   command = "*"
-  describe = "Choose a generator from the UI menu."
+  describe = "Choose a generator from the UI menu to set up a new project."
 
   builder(yargs: any) {
     
@@ -22,7 +21,7 @@ export class DefaultCommand implements Command {
       }
 
       print() {
-        console.log(chalk.green("Generator Selector: Hello world!"));
+        utils.logDebug("Generator Selector: Hello world!");
       }
     }
 
@@ -32,7 +31,7 @@ export class DefaultCommand implements Command {
 
     class GeneratorSelector {
       print() {
-        console.log(chalk.blue("Sub Generator Selector: Hello world!"));
+        utils.logDebug("Sub Generator Selector: Hello world!");
       }
 
       getPrompt() {

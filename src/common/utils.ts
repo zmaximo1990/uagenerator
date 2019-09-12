@@ -1,10 +1,9 @@
 import * as fs from "fs"
 import * as path from "path"
+import * as mkdirp from "mkdirp";
+import chalk from "chalk";
 
-declare var require
-const mkdirp = require("mkdirp")
-
-export const createDirectories = (directory: string) =>
+export const createDirectory = (directory: string) =>
   new Promise((ok, fail) =>
     mkdirp(directory, (err: any) => (err ? fail(err) : ok()))
   )
@@ -16,7 +15,7 @@ export const createFile = async (
   content: string,
   override: boolean = true
 ) => {
-  await createDirectories(path.dirname(filePath))
+  await createDirectory(path.dirname(filePath))
   return new Promise<void>((ok, fail) => {
     if (override === false && fs.existsSync(filePath)) return ok()
 
@@ -32,4 +31,12 @@ export const readFile = async (filePath: string) =>
     )
   })
 
-export const readFileSync = (filePath: string) => fs.readFileSync(filePath, "utf8")
+export const readFileSync = (filePath: string) => fs.readFileSync(filePath, "utf8");
+
+export const logError = (message: string) => console.log(chalk.red(message));
+
+export const logWarning = (message: string) => console.log(chalk.yellow(message));
+
+export const logDebug = (message: string) => console.log(chalk.blue(message));
+
+export const logSuccess = (message: string) => console.log(chalk.green(message));
