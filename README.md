@@ -1,0 +1,2 @@
+# uagenerator
+Universal Agnostic Generator
