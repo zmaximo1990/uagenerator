@@ -1,8 +1,8 @@
 import * as utils from "../../common/utils"
 
-export class <%= _.trim(_.startCase(name)) %>Command implements Command {
+export class <%= _.startCase(name).replace(/\s/g, "") %>Command implements Command {
   public command = "<%= _.toLower(name) %>"
-  public describe = "Description for the <%= _.trim(_.startCase(name)) %> command."
+  public describe = "Description for the <%= _.startCase(name).replace(/\s/g, "") %> command."
 
   public builder(yargs: any) {
     // TODO: add options for this command. Docs: http://yargs.js.org/docs/.
