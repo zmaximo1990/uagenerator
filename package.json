@@ -1,0 +1,45 @@
+{
+  "name": "uagenerator",
+  "version": "1.0.0",
+  "description": "Universal Agnostic Generator",
+  "main": "./build/index.js",
+  "scripts": {
+    "start": "npx ts-node ./src/index.ts",
+    "build": "tsc"
+  },
+  "keywords": [
+    "react-native",
+    "react",
+    "angular",
+    "ionic",
+    "generator"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zmaximo1990/uagenerator.git"
+  },
+  "author": "Máximo Zarza <zmaximo1990@gmail.com> (https://zmaximo1990.github.io)",
+  "bugs": {
+    "url": "https://github.com/zmaximo1990/uagenerator/issues"
+  },
+  "homepage": "https://github.com/zmaximo1990/uagenerator#readme",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "inquirer": "^7.0.0",
+    "lodash": "^4.17.15",
+    "mkdirp": "^0.5.1",
+    "npx": "^10.2.0",
+    "yargonaut": "^1.1.2",
+    "yargs": "^11.0.0"
+  },
+  "devDependencies": {
+    "@types/inquirer": "^6.5.0",
+    "@types/node": "^9.4.7",
+    "ts-node": "^5.0.1",
+    "typescript": "^3.6.2"
+  },
+  "bin": {
+    "uagenerator": "./build/index.js"
+  }
+}
