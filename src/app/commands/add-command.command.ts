@@ -21,21 +21,28 @@ export class AddCommand implements Command {
 
   public handler = async (argv: any) => {
     // Change case for command class name to start-case.
-    argv.name = _.startCase(argv.name).replace(/\s/g, "");
+    argv.name = utils.trim(_.startCase(argv.name));
 
     // Scaffold command file into <option-group>/commands folder.
     this.createFile(argv);
 
     // Insert code for index the command into yargs.
     // TODO: agregar forEach para cada linea de codigo a insertar
-    utils.insertContent(
-      `${__dirname}/../../index.ts`,
+    const delimiters = [
+      {
+        before: "import",
+        last: "\r\n",
+        content: `import { ${argv.name}Command } from "./app/commands/example-3.command";` // TODO: calcular el path relativo a index.ts
+      },
       {
         before: ".command",
-        last: `  .usage`,
+        last: ".usage",
         content: `  .command(new ${argv.name}Command())`
       }
-    );
+    ];
+    const targetFilePath = `${__dirname}/../../index.ts`;
+    delimiters.forEach(delimiter => utils.insertContent(targetFilePath, delimiter));
+    utils.logInfo(`Code inserted into: ${targetFilePath}`);
 
     utils.logSuccess("Done!");
   }

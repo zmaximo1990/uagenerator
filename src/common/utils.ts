@@ -3,6 +3,7 @@ import * as es from "event-stream";
 import * as path from "path"
 import * as mkdirp from "mkdirp";
 import chalk from "chalk";
+import * as _ from "lodash";
 
 export const createDirectory = (directory: string) =>
   new Promise((ok, fail) =>
@@ -41,7 +42,7 @@ export const insertContent = (filePath: string, delimiter: any) => { // TODO: ag
   const fileBackPath = `${filePath}.back`;
   copyFile(filePath, fileBackPath);
   const file = fs.createWriteStream(filePath, {encoding: "utf8"});
-  let lineBefore = null;
+  let lineBefore = "null";
 
   fs.createReadStream(fileBackPath)
   .pipe(es.split())
@@ -49,8 +50,8 @@ export const insertContent = (filePath: string, delimiter: any) => { // TODO: ag
       (line: string) => {
         let newLine = "";
         if (
-          lineBefore.indexOf(delimiter.before) > -1 &&
-          line.indexOf(delimiter.last) > -1
+          _.trim(lineBefore).startsWith(delimiter.before) &&
+          _.trim(line).startsWith(delimiter.last)
         ) {
           newLine = `${delimiter.content}\r\n`;
         }
@@ -59,13 +60,19 @@ export const insertContent = (filePath: string, delimiter: any) => { // TODO: ag
       }
   ))
   .pipe(file)
+  .end();
+  file.close();
 }
+
+export const trim = (text: string) => text.replace(/\s/g, "");
 
 export const logError = (message: string) => console.log(chalk.red(message));
 
 export const logWarning = (message: string) => console.log(chalk.yellow(message));
 
 export const logDebug = (message: string) => console.log(chalk.blue(message));
+
+export const logInfo = (message: string) => console.log(chalk.gray(message));
 
 export const logSuccess = (message: string) => console.log(chalk.green(message));
 
