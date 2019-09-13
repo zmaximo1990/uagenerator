@@ -32,6 +32,9 @@ bower_components
 # Compiled binaries
 build
 
+# Backup files
+*.back
+
 # Dependency directories
 node_modules/
 jspm_packages/
