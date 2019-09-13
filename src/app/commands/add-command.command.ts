@@ -1,4 +1,3 @@
-import * as path from "path"
 import * as utils from "../../common/utils"
 import * as _ from "lodash";
 
@@ -13,9 +12,10 @@ export class AddCommand implements Command {
         describe: "Name of the command.",
         demand: true
       })
-      .option("og", {
-        alias: "option-group",
-        describe: "Tech module where the command should be created."
+      .option("option-group", {
+        alias: "og",
+        describe: "Option group where the command should be created.",
+        default: "app"
       })
   }
 
@@ -24,37 +24,38 @@ export class AddCommand implements Command {
     argv.name = utils.trim(_.startCase(argv.name));
 
     // Scaffold command file into <option-group>/commands folder.
-    this.createFile(argv);
+    let createdFileNamePath = this.createFile(argv);
 
     // Insert code for index the command into yargs.
-    // TODO: agregar forEach para cada linea de codigo a insertar
     const delimiters = [
       {
-        before: "import",
-        last: "\r\n",
-        content: `import { ${argv.name}Command } from "./app/commands/example-3.command";` // TODO: calcular el path relativo a index.ts
+        before: (line: string) => line !== null && _.trim(line).startsWith("import"),
+        last: (line: string) => line !== null && line === "",
+        code: `import { ${argv.name}Command } from "./${createdFileNamePath}";` // TODO: calcular el path relativo a index.ts
       },
       {
-        before: ".command",
-        last: ".usage",
-        content: `  .command(new ${argv.name}Command())`
+        before: (line: string) => line !== null && _.trim(line).startsWith(".command"),
+        last: (line: string) => line !== null && _.trim(line).startsWith(".usage"),
+        code: `  .command(new ${argv.name}Command())`
       }
     ];
     const targetFilePath = `${__dirname}/../../index.ts`;
-    delimiters.forEach(delimiter => utils.insertContent(targetFilePath, delimiter));
+    utils.insertCode(targetFilePath, delimiters);
     utils.logInfo(`Code inserted into: ${targetFilePath}`);
 
     utils.logSuccess("Done!");
   }
 
-  private createFile(argv: any) {
+  private createFile(argv: any): string {
     const commandName = argv.name;
-    const outputDir = "option-group" in argv ? `${__dirname}/../../${argv.optionGroup}/commands/` : `${__dirname}/`;
+    const outputDir = `${__dirname}/../../${argv.optionGroup}/commands/`;
     const templatePath = utils.readFileSync(`${__dirname}/../templates/command.template.ejs`);
     const template = _.template(templatePath);
     const content = template({ 'name': commandName });
-    const outputFile = `${outputDir}${_.kebabCase(commandName)}.command.ts`;
-    utils.createFile(outputFile, content);
-    utils.logFileCreated(outputFile);
+    const outputFileName = `${_.kebabCase(commandName)}.command.ts`;
+    const outputFilePath = `${outputDir}${outputFileName}`;
+    utils.createFile(outputFilePath, content);
+    utils.logFileCreated(outputFilePath);
+    return `${argv.optionGroup}/commands/${utils.removeExtensionFileName(outputFileName)}`;
   }
 }

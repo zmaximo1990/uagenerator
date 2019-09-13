@@ -37,32 +37,35 @@ export const readFileSync = (filePath: string) => fs.readFileSync(filePath, {enc
 
 export const copyFile = (sourcePath: string, destinationaPath: string) => fs.copyFileSync(sourcePath, destinationaPath);
 
-export const insertContent = (filePath: string, delimiter: any) => { // TODO: agregar tipo al delimitador
+export const insertCode = (filePath: string, delimiters: any[]) => { // TODO: agregar tipo al delimitador
   // Generate a copy of the target file.
   const fileBackPath = `${filePath}.back`;
   copyFile(filePath, fileBackPath);
   const file = fs.createWriteStream(filePath, {encoding: "utf8"});
-  let lineBefore = "null";
+  let lineBefore = null;
 
   fs.createReadStream(fileBackPath)
   .pipe(es.split())
   .pipe(es.mapSync(
       (line: string) => {
         let newLine = "";
-        if (
-          _.trim(lineBefore).startsWith(delimiter.before) &&
-          _.trim(line).startsWith(delimiter.last)
-        ) {
-          newLine = `${delimiter.content}\r\n`;
+
+        const delimiter = delimiters.find(
+          (delimiter) => 
+            delimiter.before(lineBefore) &&
+            delimiter.last(line)
+        )
+        if (delimiter) {
+          newLine = `${delimiter.code}\r\n`;
         }
-        lineBefore = line; 
+        lineBefore = line;
         return `${newLine}${line}\r\n`;
       }
   ))
-  .pipe(file)
-  .end();
-  file.close();
+  .pipe(file);
 }
+
+export const removeExtensionFileName = (fileName: string) => fileName.replace(/\.[^/.]+$/, "");
 
 export const trim = (text: string) => text.replace(/\s/g, "");
 

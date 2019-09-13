@@ -84,21 +84,6 @@ export class DefaultCommand implements Command {
     await this.createModule(directory, name, selector)*/
   }
 
-  private async createFolders(directory, name) {
-    const folders = ["assets", "components", "models", "services", "pages"]
-
-    for (const folder of folders) {
-      await utils.createDirectories(this.getPath(directory, name, folder))
-    }
-  }
-
-  private async createModule(directory, name, selector) {
-    return utils.createFile(
-      this.getModulePath(directory, selector),
-      featureModuleTemplate(name)
-    )
-  }
-
   private getModulePath(directory, name) {
     return this.getPath(directory, name, `${name}.module.ts`)
   }

@@ -41,8 +41,8 @@ export class PageCommand {
     if (feature)
       directory = path.join(directory, "features", feature, argv.path)
 
-    const name = pascalCase(argv.name)
-    const selector = paramCase(name)
+    const name = argv.name
+    const selector = name
 
     await this.createModule(directory, name, selector)
     await this.createPage(directory, name, selector)
@@ -62,7 +62,7 @@ export class PageCommand {
     )
     await utils.createFile(
       this.getPath(directory, selector, `${selector}.html`),
-      pageHtmlTemplate(titleCase(name))
+      pageHtmlTemplate(name)
     )
     await utils.createFile(
       this.getPath(directory, selector, `${selector}.scss`),
