@@ -1,5 +1,6 @@
 import * as utils from "../../common/utils"
 import * as _ from "lodash";
+import * as path from "path";
 
 export class AddCommand implements Command {
   public command = "add:command"
@@ -39,21 +40,22 @@ export class AddCommand implements Command {
         code: `  .command(new ${argv.name}Command())`
       }
     ];
-    const targetFilePath = `${__dirname}/../../index.ts`;
+
+    const targetFilePath = path.join(__dirname, "..", "..", "index.ts");
     utils.insertCode(targetFilePath, delimiters);
     utils.logInfo(`Code inserted into: ${targetFilePath}`);
-
     utils.logSuccess("Done!");
   }
 
   private createFile(argv: any): string {
     const commandName = argv.name;
-    const outputDir = `${__dirname}/../../${argv.optionGroup}/commands/`;
-    const templatePath = utils.readFileSync(`${__dirname}/../templates/command.template.ejs`);
-    const template = _.template(templatePath);
+    const outputDir = path.join(__dirname, "..", "..", argv.optionGroup, "commands");
+    const templatePath = path.join(__dirname, "..", "templates", "command.template.ejs");
+    const templateFile = utils.readFileSync(templatePath);
+    const template = _.template(templateFile);
     const content = template({ 'name': commandName });
     const outputFileName = `${_.kebabCase(commandName)}.command.ts`;
-    const outputFilePath = `${outputDir}${outputFileName}`;
+    const outputFilePath = path.join(outputDir, outputFileName);
     utils.createFile(outputFilePath, content);
     utils.logFileCreated(outputFilePath);
     return `${argv.optionGroup}/commands/${utils.removeExtensionFileName(outputFileName)}`;

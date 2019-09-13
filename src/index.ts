@@ -20,3 +20,4 @@ yargs
   .help("h")
   .alias("h", "help")
   .parse()
+
