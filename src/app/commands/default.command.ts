@@ -1,23 +1,20 @@
-import * as path from "path"
-import * as utils from "../../common/utils"
+import * as path from "path";
+import * as utils from "../../common/utils";
 import * as inquirer from "inquirer";
 
 export class DefaultCommand implements Command {
-  command = "*"
-  describe = "Choose a generator from the UI menu to set up a new project."
+  command = "*";
+  describe = "Choose a generator from the UI menu to set up a new project.";
 
-  builder(yargs: any) {
-    
-  }
+  builder(yargs: any) {}
 
   handler = async (argv: any) => {
     class TechOption {
-
       static getPrompt() {
         return {
           name: "React Native",
-          value: new GeneratorSelector()
-        }
+          value: new GeneratorSelector(),
+        };
       }
 
       print() {
@@ -25,9 +22,7 @@ export class DefaultCommand implements Command {
       }
     }
 
-    class Generator {
-
-    }
+    class Generator {}
 
     class GeneratorSelector {
       print() {
@@ -43,14 +38,14 @@ export class DefaultCommand implements Command {
             choices: [
               {
                 name: "Boilerplate redux-thunk project",
-                value: new Generator()
+                value: new Generator(),
               },
               {
                 name: "Landing page",
-                value: new Generator()
-              }
-            ]
-          }
+                value: new Generator(),
+              },
+            ],
+          },
         ];
       }
     }
@@ -64,17 +59,18 @@ export class DefaultCommand implements Command {
           TechOption.getPrompt(),
           {
             name: "Angular",
-            value: "angular"
-          }
-        ]
-      }
+            value: "angular",
+          },
+        ],
+      },
     ];
 
-    const techResult = await inquirer.prompt(techsOptions)
+    const techResult = await inquirer.prompt(techsOptions);
     const tech = techResult.tech;
     tech.print();
     const generatorResult = await inquirer.prompt(tech.getPrompt());
 
+    var test;
     /*const directory = argv.dir
 
     const name = pascalCase(argv.name)
@@ -82,13 +78,13 @@ export class DefaultCommand implements Command {
 
     await this.createFolders(directory, selector)
     await this.createModule(directory, name, selector)*/
-  }
+  };
 
   private getModulePath(directory, name) {
-    return this.getPath(directory, name, `${name}.module.ts`)
+    return this.getPath(directory, name, `${name}.module.ts`);
   }
 
   private getPath(directory, feature, name) {
-    return path.join(directory, "features", feature, name)
+    return path.join(directory, "features", feature, name);
   }
 }
