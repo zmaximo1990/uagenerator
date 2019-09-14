@@ -4,6 +4,7 @@ import * as path from "path";
 import * as mkdirp from "mkdirp";
 import chalk from "chalk";
 import * as _ from "lodash";
+import { CodeDelimiter } from "./types";
 
 export const createDirectory = (directory: string) =>
   new Promise((ok, fail) =>

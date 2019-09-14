@@ -1,6 +1,7 @@
 import * as utils from "../../common/utils";
 import * as _ from "lodash";
 import * as path from "path";
+import { Command, CodeDelimiter } from "../../common/types";
 
 export class AddCommand implements Command {
   public command = "add:command";
