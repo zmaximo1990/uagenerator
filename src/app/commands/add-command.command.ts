@@ -28,7 +28,7 @@ export class AddCommand implements Command {
     const createdFileNamePath = this.createFile(argv);
 
     // Insert code for index the command into yargs.
-    const delimiters = [
+    const delimiters: CodeDelimiter[] = [
       {
         before: (line: string) =>
           line !== null && _.trim(line).startsWith("import"),

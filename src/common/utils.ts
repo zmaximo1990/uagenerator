@@ -40,8 +40,7 @@ export const readFileSync = (filePath: string) =>
 export const copyFile = (sourcePath: string, destinationaPath: string) =>
   fs.copyFileSync(sourcePath, destinationaPath);
 
-export const insertCode = (filePath: string, delimiters: any[]) => {
-  // TODO: agregar tipo al delimitador
+export const insertCode = (filePath: string, delimiters: CodeDelimiter[]) => {
   // Generate a copy of the target file.
   const fileBackPath = `${filePath}.back`;
   copyFile(filePath, fileBackPath);
@@ -55,7 +54,8 @@ export const insertCode = (filePath: string, delimiters: any[]) => {
         let newLine = "";
 
         const delimiter = delimiters.find(
-          delimit => delimit.before(lineBefore) && delimit.last(line)
+          (delimit: CodeDelimiter) =>
+            delimit.before(lineBefore) && delimit.last(line)
         );
         if (delimiter) {
           newLine = `${delimiter.code}\r\n`;
