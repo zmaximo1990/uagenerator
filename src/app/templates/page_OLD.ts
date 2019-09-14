@@ -6,7 +6,7 @@ import { Component } from "@angular/core"
 @Component({
   templateUrl: "${selector}.html"
 })
-export class ${name}Page {}`
+export class ${name}Page {}`;
 
 export const pageModuleTemplate = (name, selector) =>
   `import { NgModule } from "@angular/core"
@@ -18,7 +18,7 @@ import { ${name}Page } from "./${selector}"
   entryComponents: [${name}Page],
   imports: [IonicPageModule.forChild(${name}Page)]
 })
-export class ${name}PageModule {}`
+export class ${name}PageModule {}`;
 
 export const pageHtmlTemplate = name =>
   `<ion-header>
@@ -29,8 +29,8 @@ export const pageHtmlTemplate = name =>
 <ion-content padding>
 
 </ion-content>
-`
+`;
 
 export const pageScssTemplate = selector =>
   `${selector} {
-}`
+}`;

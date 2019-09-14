@@ -1,15 +1,14 @@
 #!/usr/bin/env node
 
 import chalk from "chalk";
-var inquirer = require('inquirer');
+const inquirer = require("inquirer");
 
 class TechOption {
-
   static getPrompt() {
     return {
       name: "React Native",
-      value: new GeneratorSelector()
-    }
+      value: new GeneratorSelector(),
+    };
   }
 
   print() {
@@ -17,9 +16,7 @@ class TechOption {
   }
 }
 
-class Generator {
-
-}
+class Generator {}
 
 class GeneratorSelector {
   print() {
@@ -35,14 +32,14 @@ class GeneratorSelector {
         choices: [
           {
             name: "Boilerplate redux-thunk project",
-            value: new Generator()
+            value: new Generator(),
           },
           {
             name: "Landing page",
-            value: new Generator()
-          }
-        ]
-      }
+            value: new Generator(),
+          },
+        ],
+      },
     ];
   }
 }
@@ -56,29 +53,20 @@ const techsOptions = [
       TechOption.getPrompt(),
       {
         name: "Angular",
-        value: "angular"
-      }
-    ]
-  }
+        value: "angular",
+      },
+    ],
+  },
 ];
 
 (async () => {
-  const techResult = await inquirer.prompt(techsOptions)
+  const techResult = await inquirer.prompt(techsOptions);
   const tech = techResult.tech;
   tech.print();
   const generatorResult = await inquirer.prompt(tech.getPrompt());
-})()
+})();
 
-
-
-
-
-
-
-
-
-
-//______________________________________________________________
+// ______________________________________________________________
 
 /*#!/usr/bin/env node
 
