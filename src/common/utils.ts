@@ -73,6 +73,12 @@ export const removeExtensionFileName = (fileName: string) =>
 
 export const pascalCase = (text: string) => _.upperFirst(_.camelCase(text));
 
+export const fillTemplate = (templatePath: string, context: any) => {
+  const templateFile = readFileSync(templatePath);
+  const template = _.template(templateFile);
+  return template(context);
+};
+
 export const logError = (message: string) => console.log(chalk.red(message));
 
 export const logWarning = (message: string) =>

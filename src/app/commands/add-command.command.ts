@@ -66,12 +66,11 @@ export class AddCommand implements Command {
       "templates",
       "command.template.ejs"
     );
-    const templateFile = utils.readFileSync(templatePath);
-    const template = _.template(templateFile);
-    const content = template({
+    const content = utils.fillTemplate(templatePath, {
       optionGroup: argv.optionGroup,
       name: commandName,
     });
+
     const outputFileName = `${_.kebabCase(commandName)}.command.ts`;
     const outputFilePath = path.join(outputDir, outputFileName);
     utils.createFile(outputFilePath, content);
