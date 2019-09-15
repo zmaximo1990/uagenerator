@@ -71,7 +71,7 @@ export const insertCode = (filePath: string, delimiters: CodeDelimiter[]) => {
 export const removeExtensionFileName = (fileName: string) =>
   fileName.replace(/\.[^/.]+$/, "");
 
-export const trim = (text: string) => text.replace(/\s/g, "");
+export const pascalCase = (text: string) => _.upperFirst(_.camelCase(text));
 
 export const logError = (message: string) => console.log(chalk.red(message));
 

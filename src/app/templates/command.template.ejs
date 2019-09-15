@@ -1,8 +1,9 @@
-import * as utils from "../../common/utils"
+import * as utils from "../../common/utils";
+import { Command } from "../../common/types";
 
 export class <%= name %>Command implements Command {
-  public command = "<%= _.toLower(name) %>"
-  public describe = "Description for the <%= name %> command."
+  public command = "<%= optionGroup %>:<%= _.toLower(name) %>";
+  public describe = "Description for the <%= name %> command.";
 
   public builder(yargs: any) {
     // TODO: add options for this command. Docs: http://yargs.js.org/docs/.

@@ -23,7 +23,7 @@ export class AddCommand implements Command {
 
   public handler = async (argv: any) => {
     // Change case for command class name to start-case.
-    argv.name = utils.trim(_.startCase(argv.name));
+    argv.name = utils.pascalCase(argv.name);
 
     // Scaffold command file into <option-group>/commands folder.
     const createdFileNamePath = this.createFile(argv);
@@ -34,7 +34,7 @@ export class AddCommand implements Command {
         before: (line: string) =>
           line !== null && _.trim(line).startsWith("import"),
         last: (line: string) => line !== null && line === "",
-        code: `import { ${argv.name}Command } from "./${createdFileNamePath}";`, // TODO: calcular el path relativo a index.ts
+        code: `import { ${argv.name}Command } from "./${createdFileNamePath}";`,
       },
       {
         before: (line: string) =>
@@ -68,7 +68,10 @@ export class AddCommand implements Command {
     );
     const templateFile = utils.readFileSync(templatePath);
     const template = _.template(templateFile);
-    const content = template({ name: commandName });
+    const content = template({
+      optionGroup: argv.optionGroup,
+      name: commandName,
+    });
     const outputFileName = `${_.kebabCase(commandName)}.command.ts`;
     const outputFilePath = path.join(outputDir, outputFileName);
     utils.createFile(outputFilePath, content);
