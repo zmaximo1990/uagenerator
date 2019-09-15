@@ -3,7 +3,7 @@ import { Command, GeneratorSelector } from "../../common/types";
 import ReactNativeGeneratorSelector from "../../react-native/generators";
 
 export class DefaultCommand implements Command {
-  command = "*";
+  command = ["*", "menu"];
   describe = "Choose a generator from the UI menu to set up a new project.";
 
   builder(yargs: any) {}
