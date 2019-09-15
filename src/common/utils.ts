@@ -1,4 +1,4 @@
-import * as fs from "fs";
+import * as fs from "fs-extra";
 import * as es from "event-stream";
 import * as path from "path";
 import * as mkdirp from "mkdirp";
@@ -28,18 +28,11 @@ export const createFile = async (
   });
 };
 
-export const readFile = async (filePath: string) =>
-  new Promise<string>((ok, fail) => {
-    fs.readFile(filePath, (err, data) =>
-      err ? fail(err) : ok(data.toString())
-    );
-  });
-
-export const readFileSync = (filePath: string) =>
+export const readFile = (filePath: string) =>
   fs.readFileSync(filePath, { encoding: "utf8" });
 
 export const copyFile = (sourcePath: string, destinationaPath: string) =>
-  fs.copyFileSync(sourcePath, destinationaPath);
+  fs.copySync(sourcePath, destinationaPath);
 
 export const insertCode = (filePath: string, delimiters: CodeDelimiter[]) => {
   // Generate a copy of the target file.
@@ -74,7 +67,7 @@ export const removeExtensionFileName = (fileName: string) =>
 export const pascalCase = (text: string) => _.upperFirst(_.camelCase(text));
 
 export const fillTemplate = (templatePath: string, context: any) => {
-  const templateFile = readFileSync(templatePath);
+  const templateFile = readFile(templatePath);
   const template = _.template(templateFile);
   return template(context);
 };
