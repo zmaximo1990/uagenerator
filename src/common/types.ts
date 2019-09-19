@@ -18,6 +18,6 @@ export class GeneratorSelector {
 
 export class Generator {
   static getPrompt: Function;
-  prompt: Function;
   run: Function;
+  prompt: Function;
 }

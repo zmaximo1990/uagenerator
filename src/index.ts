@@ -11,8 +11,10 @@ yargonaut
   .helpStyle("green")
   .errorsStyle("red");
 
+// TODO: Check yarn & npx global instalation
+
 yargs
-  .command(new DefaultCommand())
+  .command(new DefaultCommand()) // Choose a generator from the UI menu to set up a new project.
   .command(new AddCommand())
   .usage("Usage: $0 [<command>] [options]")
   .strict()

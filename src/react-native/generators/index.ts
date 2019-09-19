@@ -1,6 +1,6 @@
 import { GeneratorSelector, Generator } from "../../common/types";
 import inquirer = require("inquirer");
-import BoilerplateReduxThunkGenerator from "./boilerplate-redux-thunk";
+import ReduxThunkGenerator from "./redux-thunk";
 
 export default class ReactNativeGeneratorSelector implements GeneratorSelector {
   static getPrompt() {
@@ -17,11 +17,8 @@ export default class ReactNativeGeneratorSelector implements GeneratorSelector {
         message: "What would you like to generate?",
         type: "list",
         choices: [
-          BoilerplateReduxThunkGenerator.getPrompt(),
-          {
-            name: "Landing page",
-            value: {},
-          },
+          ReduxThunkGenerator.getPrompt(),
+          // More React-Native generators here.
         ],
       },
     ];
@@ -29,6 +26,6 @@ export default class ReactNativeGeneratorSelector implements GeneratorSelector {
       options
     );
     const generator: Generator = promptResult.generator;
-    generator.prompt();
+    generator.run();
   }
 }

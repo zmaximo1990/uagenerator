@@ -12,14 +12,11 @@ export class DefaultCommand implements Command {
     const options = [
       {
         name: "optionGroup",
-        message: "Which group option would you like to choose?",
+        message: "Which language/framework would you like to choose?",
         type: "list",
         choices: [
           ReactNativeGeneratorSelector.getPrompt(),
-          {
-            name: "Angular",
-            value: "angular",
-          },
+          // More Languages/Frameworks options here.
         ],
       },
     ];
